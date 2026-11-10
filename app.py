@@ -224,7 +224,7 @@ st.markdown(
     [data-testid="stHeader"] { background: transparent; }
     .block-container { max-width: 860px; padding-top: 2rem; padding-bottom: 2.5rem; }
     .eco-hero {
-        padding: 1.7rem 1.9rem; margin-bottom: 1.2rem;
+        padding: 1.7rem 1.9rem 2.35rem; margin-bottom: 1.2rem;
         border: 1px solid #315C43; border-radius: 24px;
         background: linear-gradient(145deg, #123F2D 0%, #20583D 68%, #2C6546 100%);
         box-shadow: 0 16px 34px rgba(39, 55, 35, .19);
@@ -232,10 +232,16 @@ st.markdown(
         overflow: hidden;
         position: relative;
     }
+    .eco-hero-plant { position: absolute; right: 5%; bottom: 1.1rem; width: 70px; height: 84px; opacity: .9; pointer-events: none; }
     .eco-hero h1 { color: #FFF9E9; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.4rem, 6vw, 3.6rem); line-height: 1.05; margin: 0 0 1rem 0; font-weight: 800; }
     .eco-hero h2 { color: #FFF9E9; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1rem, 4.2vw, 2.4rem); line-height: 1.12; white-space: nowrap; margin: 0 0 .8rem 0; font-weight: 700; }
     .eco-hero p { color: #E4E9D6; font-size: 1rem; margin: 0; }
-    .eco-hero::after { content: ""; display: block; height: 8px; margin: 1.4rem -1.9rem -1.7rem; background: linear-gradient(90deg, #6D8B48 0%, #B98B4D 48%, #6D8B48 100%); opacity: .9; }
+    .eco-hero::after {
+        content: ""; position: absolute; left: -3%; bottom: -1px; width: 106%; height: 18px;
+        background: #F6F0DF; border-radius: 55% 55% 0 0 / 100% 100% 0 0;
+        box-shadow: 0 -3px 0 rgba(185, 139, 77, .8);
+    }
+    @media (max-width: 560px) { .eco-hero-plant { width: 42px; height: 58px; right: 3%; opacity: .65; } }
     [data-testid="stVerticalBlockBorderWrapper"] { border: 1px solid #D9C9A9 !important; border-radius: 20px !important; background: #FFFCF4 !important; box-shadow: 0 9px 24px rgba(72, 57, 31, .09); }
     .st-key-search-card, .st-key-explore-card,
     [data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-search-card),
@@ -248,19 +254,26 @@ st.markdown(
     .st-key-search-card, .st-key-explore-card {
         padding: .8rem 1.05rem !important;
     }
+    [data-testid="stTextInputRootElement"],
     [data-testid="stTextInputRootElement"] > div,
-    [data-testid="stTextInputRootElement"] [data-baseweb="input"] {
-        background-color: #FFFEFA !important; border-color: #D5C6A9 !important;
+    [data-testid="stTextInputRootElement"] [data-baseweb="input"],
+    [data-testid="stTextInput"] [data-baseweb="input"],
+    div[data-baseweb="input"], div[data-baseweb="base-input"] {
+        background: #FFFEFA !important;
+        border-color: #D5C6A9 !important;
     }
+    [data-testid="stTextInput"] input,
     [data-testid="stTextInputRootElement"] input,
-    [data-testid="stTextInput"] input {
+    input[type="text"] {
         min-height: 3rem; border-radius: 12px;
-        background-color: #FFFEFA !important; color: #2E3027 !important;
-        -webkit-text-fill-color: #2E3027 !important; caret-color: #2E3027 !important;
-        font-size: 1rem;
+        background: #FFFEFA !important; background-color: #FFFEFA !important;
+        color: #2E3027 !important; -webkit-text-fill-color: #2E3027 !important;
+        caret-color: #2E3027 !important; font-size: 1rem;
+        opacity: 1 !important; color-scheme: light;
     }
+    [data-testid="stTextInput"] input::placeholder,
     [data-testid="stTextInputRootElement"] input::placeholder,
-    [data-testid="stTextInput"] input::placeholder {
+    input[type="text"]::placeholder {
         color: #78877D !important; -webkit-text-fill-color: #78877D !important; opacity: 1;
     }
     [data-testid="stTextInput"] label,
@@ -283,12 +296,22 @@ st.markdown(
     [data-testid="stBaseButton-secondary"] p { color: var(--eco-forest) !important; }
     [data-testid="stBaseButton-secondary"]:hover { background: #E8E1CF !important; border-color: #B99A68 !important; }
     .eco-result {
-        display: flex; flex-direction: column; gap: .2rem;
-        border: 1px solid; border-left-width: 6px; border-radius: 14px;
-        padding: 1rem 1.1rem; margin: .35rem 0 .8rem 0;
+        position: relative; display: flex; flex-direction: row; align-items: center; gap: .8rem;
+        width: min(100%, 350px); min-height: 96px; box-sizing: border-box;
+        border: 1px solid; border-left-width: 5px; border-radius: 14px;
+        padding: .8rem 2.6rem .8rem .8rem; margin: .35rem auto .8rem auto;
     }
-    .eco-result-label { font-size: .78rem; font-weight: 700; opacity: .84; }
-    .eco-result-value { font-size: 1.12rem; font-weight: 800; line-height: 1.35; }
+    .eco-search-title { text-align: center; color: var(--eco-forest); margin-top: 0; }
+    .eco-bin-art { display: block; flex: 0 0 54px; width: 54px; height: 64px; }
+    .eco-plant-art { display: block; position: absolute; top: 5px; right: 7px; width: 30px; height: 34px; }
+    .eco-result-copy { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+    .eco-result-label { font-size: .72rem; font-weight: 700; opacity: .9; }
+    .eco-result-value { font-size: .94rem; font-weight: 800; line-height: 1.3; }
+    @media (max-width: 560px) {
+        .eco-result { gap: .6rem; padding: .7rem 2.3rem .7rem .7rem; min-height: 88px; }
+        .eco-bin-art { flex-basis: 48px; width: 48px; height: 58px; }
+        .eco-result-value { font-size: .9rem; }
+    }
     [data-testid="stAlert"] { border-radius: 14px; }
     [data-testid="stAlert"] [data-testid="stMarkdownContainer"],
     [data-testid="stAlert"] [data-testid="stMarkdownContainer"] p {
@@ -405,6 +428,16 @@ def detectar_categoria_o_punto_limpio(residuo, modelo=None, datos=None):
     return modelo.predict([texto])[0]
 
 
+SVG_CONTENEDOR_PLANTA = """<svg class="eco-bin-art" viewBox="0 0 64 72" role="img" aria-label="Contenedor de reciclaje">
+<path d="M13 18h38l-3.5 46h-31L13 18Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M9 14h46M23 14l2-6h14l2 6M23 68v2m18-2v2" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="17" y="49" font-size="25" fill="currentColor" font-family="Arial, sans-serif">♻</text>
+</svg><svg class="eco-plant-art" viewBox="0 0 40 44" role="img" aria-label="Plantita">
+<path d="M18 37c1-9 2-17 9-25" fill="none" stroke="#55783D" stroke-width="3" stroke-linecap="round"/>
+<path d="M24 15C15 16 10 12 9 5c8-2 14 2 15 10Zm3-4C29 4 34 1 39 2c0 7-4 12-12 12Z" fill="#A8C76E" stroke="#55783D" stroke-width="2" stroke-linejoin="round"/>
+</svg>"""
+
+
 def mostrar_resultado(categoria, tipo_detectado=None):
     with st.container(border=True):
         st.markdown("#### Resultado")
@@ -413,11 +446,11 @@ def mostrar_resultado(categoria, tipo_detectado=None):
         if categoria == MENSAJE_PUNTO_LIMPIO:
             st.markdown(
                 '<div class="eco-result" style="background:#FCE4E4;color:#973F3F;border-color:#EFBDBD;">'
-                '<span class="eco-result-label">Orientación</span>'
-                '<span class="eco-result-value">Ir al punto limpio</span></div>',
+                f'{SVG_CONTENEDOR_PLANTA}'
+                '<div class="eco-result-copy"><span class="eco-result-label">Orientación</span>'
+                '<span class="eco-result-value">Ir al punto limpio</span></div></div>',
                 unsafe_allow_html=True,
             )
-            st.write("Este residuo no aparece en las categorías del modelo. Prueba con una descripción más concreta.")
         else:
             fondo, texto_color, borde = ESTILOS_RESULTADO.get(
                 categoria, ("#EEF2EF", "#33443B", "#D6E0D8")
@@ -425,8 +458,9 @@ def mostrar_resultado(categoria, tipo_detectado=None):
             destino = NOMBRES_CONTENEDOR.get(categoria, categoria)
             st.markdown(
                 f'<div class="eco-result" style="background:{fondo};color:{texto_color};border-color:{borde};">'
-                f'<span class="eco-result-label">Deposítalo en</span>'
-                f'<span class="eco-result-value">{destino}</span></div>',
+                f'{SVG_CONTENEDOR_PLANTA}'
+                f'<div class="eco-result-copy"><span class="eco-result-label">Deposítalo en</span>'
+                f'<span class="eco-result-value">{destino}</span></div></div>',
                 unsafe_allow_html=True,
             )
             st.write(CONSEJOS.get(categoria, "Consulta las instrucciones de separación locales."))
@@ -505,6 +539,11 @@ if st.session_state["sesion_cerrada"]:
 st.markdown(
     """
     <div class="eco-hero">
+      <svg class="eco-hero-plant" viewBox="0 0 64 80" aria-hidden="true">
+        <path d="M29 74c2-19 7-35 20-51" fill="none" stroke="#B9D28A" stroke-width="4" stroke-linecap="round"/>
+        <path d="M43 34C25 37 15 29 14 14c16-3 27 5 29 19Zm7-13C51 6 61 1 63 2c1 15-4 24-14 27Z" fill="#A9C86C" stroke="#D7E6B2" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M34 60C20 62 10 55 8 43c14-2 24 4 27 16Z" fill="#789C53" stroke="#B9D28A" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
       <h1>♻ Eco-asistente</h1>
       <h2>Reciclar empieza por identificarlo</h2>
       <p>Escribe un residuo y recibe una orientación clara sobre dónde depositarlo.</p>
@@ -520,14 +559,14 @@ except FileNotFoundError as error:
     st.stop()
 
 with st.container(border=True, key="search-card"):
-    st.subheader("¿Qué quieres tirar?")
+    st.markdown('<h3 class="eco-search-title">¿Dónde lo tiramos?</h3>', unsafe_allow_html=True)
     st.caption("Prueba con un nombre y material: botella de plástico, frasco de vidrio o lechuga.")
     residuo = st.text_input(
         "Nombre del residuo",
         placeholder="Ej.: botella de tomate de vidrio",
         label_visibility="collapsed",
     )
-    _, boton_col = st.columns([2.2, 1])
+    _, boton_col, _ = st.columns([1, 1, 1])
     with boton_col:
         consultar = st.button("♻ Clasificar", type="primary", use_container_width=True)
 
@@ -589,7 +628,7 @@ with st.container(border=True, key="search-card"):
         )
 
 # Estas gráficas ayudan a explicar tanto los datos como los aciertos y errores del modelo.
-with st.expander("Ver análisis de datos y evaluación del modelo"):
+with st.expander("📊 Ver análisis de datos y evaluación del modelo"):
     st.caption("Estos gráficos muestran una evaluación fija sobre ejemplos reservados. No cambian al consultar un residuo nuevo.")
     st.subheader("Ejemplos disponibles por categoría")
     conteo_categorias = (
